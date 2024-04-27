@@ -2,24 +2,23 @@ from collections import defaultdict
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         #populate hashmap
-        countMap = defaultdict(int)
+        freq_map = defaultdict(int)
         for num in nums:
-            countMap[num] += 1
+            freq_map[num] += 1
                 
-        # create list of buckets
-        bucket = []
-        for i in range(len(nums)):
-            bucket.append([])
         
-        # populate buckets
-        for c_k, c_v in countMap.items():
-            bucket[c_v - 1].append(c_k)
+        # create list of buckets
+        buckets = [[] for i in range(len(nums) + 1)]
+
+        # populate each bucket with freq_map keys
+        for item, number in freq_map.items():
+            buckets[number].append(item)
         
         final_res = []
         # loop through each list in the bucket
-        for b1 in reversed(bucket):
-            if len(b1) == 0: continue
-            for b2 in b1:
-                if len(final_res) == k: return final_res
-                if b2 not in final_res: final_res.append(b2)
-        return final_res
+        for bucket in reversed(buckets):
+            for bucket_item in bucket:
+                if bucket_item not in final_res:
+                    final_res.append(bucket_item)
+                if len(final_res) == k: 
+                    return final_res
