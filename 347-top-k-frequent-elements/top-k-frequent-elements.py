@@ -18,9 +18,8 @@ class Solution:
         final_res = []
         # loop through each list in the bucket
         for b1 in reversed(bucket):
-            if len(final_res) == k: return final_res
             if len(b1) == 0: continue
             for b2 in b1:
-                if len(final_res) < k and b2 not in final_res:
-                    final_res.append(b2)
+                if len(final_res) == k: return final_res
+                if b2 not in final_res: final_res.append(b2)
         return final_res
