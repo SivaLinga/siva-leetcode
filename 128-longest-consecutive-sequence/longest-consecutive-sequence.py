@@ -1,26 +1,22 @@
-from collections import defaultdict
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         n = len(nums)
         if n < 2: return n
-        counter_map = {}
+        numSet = {}
+        max_length = 0
+
         for num in nums:
-            if num not in counter_map:
-                counter_map[num] = False
-        max_count = 1
+            if num not in numSet:
+                numSet[num] = False
+
         for num in nums:
-            curr_count = 1
-            if counter_map[num] == True: continue
-            counter_map[num] = True
-            right_elem = num + 1
-            left_elem = num - 1
-            while right_elem in counter_map:
-                counter_map[right_elem] = True
-                curr_count += 1
-                right_elem += 1
-            while left_elem in counter_map:
-                counter_map[left_elem] = True
-                curr_count += 1
-                left_elem -= 1
-            max_count = max(max_count, curr_count)
-        return max_count
+            if numSet[num] == True: continue
+            # check if num is start of a sequence
+            if num - 1 not in numSet:
+                numSet[num] = True
+                curr_length = 0
+                while num + curr_length in numSet:
+                    numSet[num + curr_length] = True
+                    curr_length += 1
+                max_length = max(curr_length, max_length)
+        return max_length
