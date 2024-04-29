@@ -11,7 +11,7 @@ class Solution:
         for i in range(1, len(nums)):
             if nums[i] == nums[i-1]: continue
             if nums[i] - nums[i-1] == 1:
-                curr_count = curr_count + 1
+                curr_count += 1
             else:
                 max_count = max(max_count, curr_count)
                 curr_count = 1
